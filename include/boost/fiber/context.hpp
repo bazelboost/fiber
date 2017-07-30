@@ -198,7 +198,8 @@ private:
         policy_{ policy } {
     }
 
-    void resume_( detail::data_t &) noexcept;
+protected:
+    void resume_();
 
 public:
     class id {
@@ -401,7 +402,7 @@ public:
             // destruct context
             ctx->~context();
             // deallocated stack
-            c.resume( nullptr);
+            c.resume();
         }
     }
 };
@@ -423,15 +424,7 @@ private:
             // fn and tpl must be destroyed before calling terminate()
             auto fn = std::move( fn_);
             auto arg = std::move( arg_);
-            c = c.resume();
-            detail::data_t * dp = c.get_data< detail::data_t * >();
-            // update contiunation of calling fiber
-            dp->from->c_ = std::move( c);
-            if ( nullptr != dp->lk) {
-                dp->lk->unlock();
-            } else if ( nullptr != dp->ctx) {
-                active()->schedule( dp->ctx);
-            }
+            c.resume();
 #if defined(BOOST_NO_CXX17_STD_APPLY)
            boost::context::detail::apply( std::move( fn), std::move( arg) );
 #else
