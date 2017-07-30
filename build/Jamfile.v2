@@ -84,6 +84,10 @@ lib boost_fiber
       barrier.cpp
       condition_variable.cpp
       context.cpp
+      detail/spinlock_ttas.cpp
+      detail/spinlock_ttas_adaptive.cpp
+      detail/spinlock_ttas_adaptive_futex.cpp
+      detail/spinlock_ttas_futex.cpp
       fiber.cpp
       future.cpp
       mutex.cpp
