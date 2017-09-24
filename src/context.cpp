@@ -37,10 +37,10 @@ private:
     }
 
 public:
-    dispatcher_context( boost::context::preallocated const& palloc, default_stack const& salloc) :
+    dispatcher_context( boost::context::preallocated const& palloc, default_stack & salloc) :
         context{ 0, type::dispatcher_context, launch::post } {
         c_ = boost::context::callcc(
-                std::allocator_arg, palloc, salloc,
+                std::allocator_arg, palloc, std::move( salloc),
                 std::bind( & dispatcher_context::run_, this, std::placeholders::_1) );
     }
 };
