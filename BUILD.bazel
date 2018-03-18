@@ -20,6 +20,10 @@ cc_library(
 	],
 	deps = [
 		"@com_github_bazelboost_assert//:assert",
-		"@com_github_bazelboost_config//:config"
+		"@com_github_bazelboost_config//:config",
+		"@com_github_bazelboost_smart_ptr//:smart_ptr",
+		"@com_github_bazelboost_context//:context",
+		"@com_github_bazelboost_intrusive//:intrusive",
+		"@com_github_bazelboost_core//:core"
 	],
 )
