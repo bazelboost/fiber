@@ -1,0 +1,25 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+_public_hdrs = [
+    "include/boost/*.hpp",
+    "include/boost/fiber/*.hpp",
+    "include/boost/fiber/algo/*.hpp",
+    "include/boost/fiber/cuda/*.hpp",
+    "include/boost/fiber/future/*.hpp",
+    "include/boost/fiber/hip/*.hpp",
+    "include/boost/fiber/numa/*.hpp",
+    "include/boost/fiber/numa/algo/*.hpp",
+]
+
+cc_library(
+    name = "fiber_internal",
+    hdrs = glob(["include/boost/**/*.hpp"], exclude = _public_hdrs),
+)
+
+cc_library(
+    name = "fiber",
+    visibility = ["//visibility:public"],
+    includes = ["include"],
+    hdrs = glob(_public_hdrs),
+    deps = [":fiber_internal"],
+)
